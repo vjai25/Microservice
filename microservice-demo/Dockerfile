@@ -1,5 +1,3 @@
-ECHO is on.
-
 # Use an official Node.js image
 FROM node:16
 
@@ -16,5 +14,5 @@ COPY . .
 # Expose the port
 EXPOSE 3000
 
-#Star the microservice
-CMD [ "node", "index.js" ]
+# Start the microservice
+CMD ["node", "index.js"]
