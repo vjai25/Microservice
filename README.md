@@ -65,3 +65,69 @@ Example:
 
 curl http://localhost:3000
 Output: Hello, this is a simple microservice!
+
+
+2. Use Docker to Create an Image
+Docker allows you to package your microservice along with its dependencies into an image.
+
+Step 2.1: Create a Dockerfile
+Create the file:
+touch Dockerfile
+Dockerfile: A file used to define the steps to create a Docker image.
+Write the following content in Dockerfile:
+
+dockerfile
+
+# Use an official Node.js image
+FROM node:16
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the application code
+COPY . .
+
+# Expose the port
+EXPOSE 3000
+
+# Start the microservice
+CMD ["node", "index.js"]
+
+
+Explanation:
+FROM node:16: Uses a Node.js image as the base.
+WORKDIR /app: Sets /app as the working directory.
+COPY package*.json ./: Copies package.json files.
+RUN npm install: Installs dependencies.
+COPY . .: Copies the app code into the image.
+EXPOSE 3000: Opens port 3000.
+CMD ["node", "index.js"]: Runs the service when the container starts.
+
+
+//Step 2.2: Build the Docker Image
+//Run the following command:
+
+docker build -t microservice-demo .
+
+//-t microservice-demo: Tags the image with the name microservice-demo.
+//.: Specifies the current directory as the build context.
+
+//Verify the image:
+docker images
+
+//Lists all Docker images, including microservice-demo.
+
+//Step 2.3: Run the Docker Container
+Start the container:
+docker run -p 3000:3000 microservice-demo
+
+//-p 3000:3000: Maps the container’s port 3000 to your local machine's port 3000.
+microservice-demo: Specifies the image to use.
+Test the container:
+
+Visit http://localhost:3000 in your browser or use curl.
+
