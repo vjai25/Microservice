@@ -1,1 +1,22 @@
 ECHO is on.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: microservice-demo
+  template:
+    metadata:
+      labels:
+        app: microservice-demo
+    spec:
+      containers:
+      - name: microservice-demo
+        image: microservice-demo:latest
+        ports:
+        - containerPort: 3000
+
