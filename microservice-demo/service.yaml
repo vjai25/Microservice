@@ -1,1 +1,13 @@
-ECHO is on.
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-demo
+spec:
+  selector:
+    app: microservice-demo
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+
