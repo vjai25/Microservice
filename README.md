@@ -131,3 +131,80 @@ Test the container:
 
 Visit http://localhost:3000 in your browser or use curl.
 
+
+3. Deploy It to Kubernetes
+Kubernetes allows you to deploy and manage containers at scale.
+
+# Step 3.1: Create a Kubernetes Deployment
+//Create a file named deployment.yaml:
+
+touch deployment.yaml
+
+// Add the following content:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: microservice-demo
+  template:
+    metadata:
+      labels:
+        app: microservice-demo
+    spec:
+      containers:
+      - name: microservice-demo
+        image: microservice-demo:latest
+        ports:
+        - containerPort: 3000
+
+# Explanation:
+// replicas: 2: Deploys two instances of the microservice.
+// image: microservice-demo:latest: Specifies the Docker image to use.
+
+# Step 3.2: Create a Service
+// Add a service.yaml file:
+
+touch service.yaml
+
+//Add the following content:
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice-demo
+spec:
+  selector:
+    app: microservice-demo
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+Explanation:
+type: LoadBalancer: Exposes the service outside the cluster.
+
+# Step 3.3: Apply the Configurations
+// Deploy to Kubernetes:
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+Verify the Deployment:
+
+
+kubectl get pods
+Lists all running pods.
+Access the Service:
+
+//Use the external IP provided by the LoadBalancer:
+
+kubectl get service
+End-to-End Flow Summary
+Build and test the microservice locally.
+Containerize it using Docker.
+Deploy and scale it using Kubernetes.
+
