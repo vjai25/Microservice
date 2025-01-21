@@ -190,7 +190,6 @@ type: LoadBalancer: Exposes the service outside the cluster.
 
 # Step 3.3: Apply the Configurations
 // Deploy to Kubernetes:
-
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 Verify the Deployment:
